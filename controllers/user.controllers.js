@@ -1,5 +1,6 @@
 const { User } = require('../dbInit');
 const crypto = require('crypto');
+const passport = require('passport');
 const catchAsync = require('../utils/catchAsync');
 
 module.exports.getAllUsers = catchAsync(async (req, res) => {
@@ -23,3 +24,28 @@ module.exports.register = catchAsync(async (req, res) => {
         });
     }));
 });
+
+module.exports.login = (req, res) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            return res.status(500).json({ error: 'Something went wrong' });
+        }
+        if (!user) {
+            return res.status(400).json({ error: 'Invalid credentials' });
+        };
+
+        req.login(user, (err) => {
+            if (err) {
+                return res.status(500).json({ error: 'Something went wrong' });
+            };
+            req.session.user = user;
+            res.status(200).json(user);
+        });
+
+    })(req, res);
+};
+
+module.exports.logout = (req, res) => {
+    req.logOut();
+    res.status(200).json({ message: 'Logged out successfully' });
+};
