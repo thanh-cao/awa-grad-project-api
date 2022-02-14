@@ -49,3 +49,9 @@ module.exports.logout = (req, res) => {
     req.logOut();
     res.status(200).json({ message: 'Logged out successfully' });
 };
+
+module.exports.getUserProfile = catchAsync(async (req, res) => {
+    const user = await User.findByPk(req.params.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.status(200).json(user);
+});
