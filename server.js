@@ -8,6 +8,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
 const session = require('express-session');
+const path = require('path');
+const ejsMate = require('ejs-mate');
 
 const db = require('./dbInit');
 const User = db.User;
@@ -17,6 +19,9 @@ const userRouters = require('./routers/user.routers');
 
 const app = express();
 db.initDB();  // check if db is connected
+app.engine('ejs', ejsMate);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());

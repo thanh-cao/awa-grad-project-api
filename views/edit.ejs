@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+</head>
+<body>
+    <form action="/users/<%=user.id%>" method="POST">
+        <input type="text" id="name" name="name" placeholder="Name" value="<%=user.name%>">
+        <input type="text" id="email" name="email" placeholder="Email" value="<%=user.email%>">
+        <textarea id="about" name="about" placeholder="About me" value="<%= user.about %> "></textarea>
+        <textarea id="interests" name="interests" placeholder="Interests" value="<%= user.interests %> "></textarea>
+        <input type="text" id="profilePicture" name="profilePicture" placeholder="Profile Picture" value="<%= user.profilePicture %> ">
+        <input type="submit" value="Edit">
+    </form>
+</body>
+</html>
