@@ -7,11 +7,17 @@ const cors = require('cors');
 
 const db = require('./dbInit');
 
+// import routers
+const userRouters = require('./routers/user.routers');
+
+
 const app = express();
 db.initDB();  // check if db is connected
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ origin: process.env.DOMAIN, credentials: true, methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
+
+app.use('/users', userRouters);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
