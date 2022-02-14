@@ -55,3 +55,12 @@ module.exports.getUserProfile = catchAsync(async (req, res) => {
     if (!user) return res.status(404).json({ error: 'User not found' });
     res.status(200).json(user);
 });
+
+module.exports.updateUserProfile = catchAsync(async (req, res) => {
+    const user = await User.findByPk(req.params.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    const { name, email, about, interests, languages, profilePicture } = req.body;
+    user.set({ name, email, about, interests, languages, profilePicture });
+    const updatedUser = await user.save();
+    res.status(200).json(updatedUser);
+});

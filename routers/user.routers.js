@@ -12,6 +12,7 @@ router.post('/login', users.login);
 router.get('/logout', users.logout);
 
 router.route('/:id')
-    .get(users.getUserProfile);
+    .get(users.getUserProfile)
+    .post(users.updateUserProfile);
 
 module.exports = router;
