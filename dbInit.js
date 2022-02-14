@@ -54,19 +54,23 @@ const User = sequelize.define('User', {
     },
     about: {
         type: DataTypes.TEXT,
-        allowNull: true
+        allowNull: true,
+        defaultValue: null
     },
     interests: {
         type: DataTypes.TEXT,
-        allowNull: true
+        allowNull: true,
+        defaultValue: null
     },
     languages: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: true
+        allowNull: true,
+        defaultValue: null
     },
     profilePicture: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        defaultValue: null
     }
 });
 
