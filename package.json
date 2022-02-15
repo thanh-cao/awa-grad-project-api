@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/thanh-cao/awa-grad-project-api#readme",
   "dependencies": {
+    "cloudinary": "^1.28.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
@@ -26,6 +27,8 @@
     "express": "^4.17.2",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.4",
+    "multer-storage-cloudinary": "^4.0.0",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

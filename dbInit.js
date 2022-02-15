@@ -62,6 +62,11 @@ const User = sequelize.define('User', {
         allowNull: true,
         defaultValue: null
     },
+    location: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null
+    },
     languages: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,

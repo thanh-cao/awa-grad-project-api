@@ -59,8 +59,9 @@ module.exports.getUserProfile = catchAsync(async (req, res) => {
 module.exports.updateUserProfile = catchAsync(async (req, res) => {
     const user = await User.findByPk(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found' });
-    const { name, email, about, interests, languages, profilePicture } = req.body;
-    user.set({ name, email, about, interests, languages, profilePicture });
+    const { name, email, about, interests, languages, location } = req.body;
+    user.set({ name, email, about, interests, languages, location });
+    user.profilePicture = req.file ? req.file.path : user.profilePicture;
     const updatedUser = await user.save();
     res.status(200).json(updatedUser);
 });
