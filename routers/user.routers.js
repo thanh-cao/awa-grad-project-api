@@ -10,7 +10,7 @@ const users = require('../controllers/user.controllers');
 router.get('/', users.getAllUsers);
 
 router.post('/register', users.register);
-
+router.get('/register', (req, res) => res.render('register'))
 router.post('/login', users.login);
 
 router.get('/logout', users.logout);

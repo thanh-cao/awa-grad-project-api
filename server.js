@@ -21,7 +21,6 @@ const serviceRouters = require('./routers/service.routers');
 
 const app = express();
 app.use(cors({ origin: process.env.DOMAIN, credentials: true, methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
-
 db.initDB();  // check if db is connected
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
