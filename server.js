@@ -8,7 +8,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
 const session = require('express-session');
-const fetch = require('node-fetch');
 const path = require('path');
 const ejsMate = require('ejs-mate');
 
@@ -17,6 +16,8 @@ const User = db.User;
 
 // import routers
 const userRouters = require('./routers/user.routers');
+// const userReviewRouters = require('./routers/userReview.routers');
+const serviceRouters = require('./routers/service.routers');
 
 const app = express();
 app.use(cors({ origin: process.env.DOMAIN, credentials: true, methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
@@ -73,19 +74,11 @@ passport.deserializeUser(function (id, done) {
 
 
 app.use('/users', userRouters);
-
+// app.use('/users/:id/reviews', userReviewRouters);
+app.use('/services', serviceRouters);
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
-
-app.get('/ticketmaster', async (req, res) => {
-    const TM_API_URL = 'https://app.ticketmaster.com/discovery/v2';
-    const location = req.query.keyword;
-    const url = `${TM_API_URL}/events.json?apikey=${process.env.REACT_APP_TICKETMASTER_API_KEY}&keyword=${location}`;
-    await fetch(url)
-        .then(response => response.json())
-        .then(result => res.json(result));
-})
 
 // catch 404 and forward to error handler
 app.all('*', (req, res, next) => {
