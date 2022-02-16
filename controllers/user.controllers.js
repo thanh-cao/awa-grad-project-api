@@ -57,10 +57,14 @@ module.exports.getUserProfile = catchAsync(async (req, res) => {
 });
 
 module.exports.updateUserProfile = catchAsync(async (req, res) => {
+    console.log('update');
+    console.log(req.params.id);
     const user = await User.findByPk(req.params.id);
+    console.log(user);
     if (!user) return res.status(404).json({ error: 'User not found' });
-    const { name, email, about, interests, languages, profilePicture } = req.body;
-    user.set({ name, email, about, interests, languages, profilePicture });
+
+    const { about, interests, languages, profilePicture } = req.body;
+    user.set({ name: user.name, email: user.email, about, interests, languages, profilePicture });
     const updatedUser = await user.save();
     res.status(200).json(updatedUser);
 });

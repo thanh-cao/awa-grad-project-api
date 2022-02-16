@@ -18,13 +18,13 @@ const User = db.User;
 const userRouters = require('./routers/user.routers');
 
 const app = express();
+app.use(cors({ origin: process.env.DOMAIN, credentials: true, methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
 db.initDB();  // check if db is connected
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
 
 // set up session
 const sessionConfig = {

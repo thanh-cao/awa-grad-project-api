@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const { Sequelize, DataTypes } = require('sequelize');
 
-const dialectOptions = process.env.NODE_ENV !== "production" ? null : {
+const dialectOptions = {
     ssl: {
         require: true,
         rejectUnauthorized: false
