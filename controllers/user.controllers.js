@@ -65,6 +65,7 @@ module.exports.updateUserProfile = catchAsync(async (req, res) => {
 
     const { about, interests, languages, profilePicture } = req.body;
     user.set({ name: user.name, email: user.email, about, interests, languages, profilePicture });
+    user.profilePicture = req.file ? req.file.path : user.profilePicture;
     const updatedUser = await user.save();
     res.status(200).json(updatedUser);
 });
