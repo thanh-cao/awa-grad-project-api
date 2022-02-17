@@ -4,7 +4,9 @@ const passport = require('passport');
 const catchAsync = require('../utils/catchAsync');
 
 module.exports.getAllUsers = catchAsync(async (req, res) => {
-    const users = await User.findAll();
+    const users = await User.findAll({
+        attributes: { exclude: ['password', 'salt', 'updatedAt'] }
+    });
     res.status(200).json(users);
 });
 
@@ -41,7 +43,6 @@ module.exports.login = (req, res) => {
             req.session.user = user;
             res.status(200).json(user);
         });
-
     })(req, res);
 };
 
@@ -51,13 +52,17 @@ module.exports.logout = (req, res) => {
 };
 
 module.exports.getUserProfile = catchAsync(async (req, res) => {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.params.id, {
+        attributes: { exclude: ['password', 'salt', 'updatedAt'] }
+    });
     if (!user) return res.status(404).json({ error: 'User not found' });
     res.status(200).json(user);
 });
 
 module.exports.updateUserProfile = catchAsync(async (req, res) => {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.params.id, {
+        attributes: { exclude: ['password', 'salt'] }
+    });
     if (!user) return res.status(404).json({ error: 'User not found' });
 
     const { about, interests, languages, location, profilePicture } = req.body;
