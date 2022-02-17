@@ -16,7 +16,7 @@ const User = db.User;
 
 // import routers
 const userRouters = require('./routers/user.routers');
-// const userReviewRouters = require('./routers/userReview.routers');
+const userReviewRouters = require('./routers/userReview.routers');
 const serviceRouters = require('./routers/service.routers');
 
 const app = express();
@@ -73,7 +73,7 @@ passport.deserializeUser(function (id, done) {
 
 
 app.use('/users', userRouters);
-// app.use('/users/:id/reviews', userReviewRouters);
+app.use('/users/:id/reviews', userReviewRouters);
 app.use('/services', serviceRouters);
 app.get('/', (req, res) => {
     res.send('Hello World!');
