@@ -7,5 +7,8 @@ const reviews = require('../controllers/userReview.controllers');
 
 router.post('/', reviews.createReview);
 
+router.route('/:reviewid')
+    .post(reviews.editReview)
+    .delete(reviews.deleteReview);
 
 module.exports = router;
