@@ -16,16 +16,18 @@ const db = require("./dbInit");
 const User = db.User;
 
 // import routers
-const userRouters = require("./routers/user.routers");
+const userRouters = require('./routers/user.routers');
+const userReviewRouters = require('./routers/userReview.routers');
+const serviceRouters = require('./routers/service.routers');
 
 const app = express();
-db.initDB(); // check if db is connected
-app.engine("ejs", ejsMate);
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.use(cors({ origin: process.env.DOMAIN, credentials: true, methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
+db.initDB();  // check if db is connected
+app.engine('ejs', ejsMate);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
 
 // set up session
 const sessionConfig = {
@@ -90,20 +92,11 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/ticketmaster", async (req, res) => {
-  console.log("get ticket");
-  const TM_API_URL = "https://app.ticketmaster.com/discovery/v2";
-  const location = req.query.keyword;
-  console.log(location);
-  const url = `${TM_API_URL}/events.json?apikey=${process.env.REACT_APP_TICKETMASTER_API_KEY}&keyword=${location}`;
-  console.log(url);
-
-  await fetch(url)
-    .then((response) => response.json())
-    .then((result) => {
-      console.log(result);
-      res.json(result);
-    });
+app.use('/users', userRouters);
+app.use('/users/:id/reviews', userReviewRouters);
+app.use('/services', serviceRouters);
+app.get('/', (req, res) => {
+    res.send('Hello World!');
 });
 
 // catch 404 and forward to error handler
