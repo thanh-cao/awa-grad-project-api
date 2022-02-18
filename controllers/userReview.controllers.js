@@ -1,5 +1,22 @@
-const { Review } = require('../dbInit');
+const { User, Review } = require('../dbInit');
 const catchAsync = require('../utils/catchAsync');
+
+module.exports.getUserReviews = catchAsync(async (req, res) => {
+    const userId = parseInt(req.params.id);
+    const reviews = await Review.findAndCountAll({
+        where: {
+            receiverId: userId,
+        },
+        include: [
+            {
+                model: User,
+                as: 'reviewer',
+                attributes: ['id', 'name', 'location', 'profilePicture'],
+            }
+        ]
+    });
+    res.status(200).json(reviews);
+})
 
 module.exports.createReview = catchAsync(async (req, res) => {
     const receiverId = req.params.id;

@@ -5,7 +5,9 @@ const router = express.Router({ mergeParams: true });
 const reviews = require('../controllers/userReview.controllers');
 
 
-router.post('/', reviews.createReview);
+router.route('/')
+    .get(reviews.getUserReviews)
+    .post(reviews.createReview);
 
 router.route('/:reviewid')
     .post(reviews.editReview)

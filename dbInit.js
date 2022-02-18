@@ -32,8 +32,7 @@ const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true,
-        foreignKey: true
+        primaryKey: true
     },
     name: {
         type: DataTypes.STRING,
@@ -63,6 +62,11 @@ const User = sequelize.define('User', {
         defaultValue: null
     },
     location: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null
+    },
+    countryCode: {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: null
@@ -101,6 +105,8 @@ const Review = sequelize.define('Review', {
 
 
 User.hasMany(Review, { foreignKey: 'receiverId' });
-Review.belongsTo(User, { targetKey: 'id', foreignKey: 'receiverId' });
+User.hasMany(Review, { foreignKey: 'reviewerId' });
+Review.belongsTo(User, { targetKey: 'id', foreignKey: 'receiverId', as: 'receiver' });
+Review.belongsTo(User, { targetKey: 'id', foreignKey: 'reviewerId', as: 'reviewer' });
 
 module.exports = { initDB, sequelize, User, Review };
