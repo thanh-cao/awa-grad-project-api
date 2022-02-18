@@ -66,7 +66,7 @@ const User = sequelize.define('User', {
         allowNull: true,
         defaultValue: null
     },
-    countryCode: {
+    countrycode: {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: null
