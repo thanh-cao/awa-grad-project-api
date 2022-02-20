@@ -65,8 +65,16 @@ module.exports.updateUserProfile = catchAsync(async (req, res) => {
     });
     if (!user) return res.status(404).json({ error: 'User not found' });
 
-    const { about, interests, languages, location, profilePicture } = req.body;
-    user.set({ name: user.name, email: user.email, about, interests, languages, location, profilePicture });
+    const { about, interests, languages, location, profilePicture, countrycode } = req.body;
+    user.set({ name: user.name, email: user.email, about, interests, languages, location, profilePicture, countrycode });
     const updatedUser = await user.save();
     res.status(200).json(updatedUser);
 });
+
+module.exports.authenticateUser = (req, res) => {
+    if (req.isAuthenticated()) {
+        res.status(200).json(req.session.user);
+    } else {
+        res.status(401).json({ error: 'User not authenticated' });
+    }
+}

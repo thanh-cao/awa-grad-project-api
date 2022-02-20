@@ -19,4 +19,6 @@ router.route('/:id')
     .get(users.getUserProfile)
     .post(upload.single('profilePicture'), users.updateUserProfile);
 
+router.get('/authenticate', users.authenticateUser);
+
 module.exports = router;
