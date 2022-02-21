@@ -10,7 +10,7 @@ router.route('/')
     .post(reviews.createReview);
 
 router.route('/:reviewid')
-    .post(reviews.editReview)
+    .put(reviews.editReview)
     .delete(reviews.deleteReview);
 
 module.exports = router;

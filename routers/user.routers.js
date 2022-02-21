@@ -10,15 +10,15 @@ const users = require('../controllers/user.controllers');
 router.get('/', users.getAllUsers);
 
 router.post('/register', users.register);
-router.get('/register', (req, res) => res.render('register'))
+
 router.post('/login', users.login);
 
 router.get('/logout', users.logout);
 
+router.get('/authenticate', users.authenticateUser);
+
 router.route('/:id')
     .get(users.getUserProfile)
-    .post(upload.single('profilePicture'), users.updateUserProfile);
-
-router.get('/authenticate', users.authenticateUser);
+    .put(users.updateUserProfile);
 
 module.exports = router;
