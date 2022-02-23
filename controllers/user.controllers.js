@@ -22,7 +22,10 @@ module.exports.register = catchAsync(async (req, res) => {
         const user = await User.create({ email, name, password: hashedPassword, salt });
         req.login(user, (err) => {
             if (err) return next(err);
-            res.status(200).json(user);
+            let cleanUser = user.toJSON();
+            delete cleanUser.password;
+            delete cleanUser.salt;
+            res.status(200).json(cleanUser);
         });
     }));
 });
@@ -40,8 +43,11 @@ module.exports.login = (req, res) => {
             if (err) {
                 return res.status(500).json({ error: 'Something went wrong' });
             };
-            req.session.user = user;
-            res.status(200).json(user);
+            let cleanUser = user.toJSON();
+            delete cleanUser.password;
+            delete cleanUser.salt;
+            req.session.user = cleanUser;
+            res.status(200).json(cleanUser);
         });
     })(req, res);
 };
