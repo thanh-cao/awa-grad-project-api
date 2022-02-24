@@ -3,6 +3,7 @@ if (process.env.NODE_ENV !== "production") {
 };
 
 const { Sequelize, DataTypes } = require('sequelize');
+// const { seedDB } = require('./seedDB');
 
 const dialectOptions = {
     ssl: {
@@ -26,6 +27,7 @@ async function initDB() {
         console.error('Unable to connect to the database:', error);
     }
     // await sequelize.sync({ force: true });
+    // seedDB();
 };
 
 const User = sequelize.define('User', {
@@ -83,6 +85,33 @@ const User = sequelize.define('User', {
     }
 });
 
+const ContactInfo = sequelize.define('ContactInfo', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    facebook: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null
+    },
+    instagram: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null
+    },
+    twitter: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null
+    }
+});
+
 const Review = sequelize.define('Review', {
     id: {
         type: DataTypes.INTEGER,
@@ -109,4 +138,7 @@ User.hasMany(Review, { foreignKey: 'reviewerId' });
 Review.belongsTo(User, { targetKey: 'id', foreignKey: 'receiverId', as: 'receiver' });
 Review.belongsTo(User, { targetKey: 'id', foreignKey: 'reviewerId', as: 'reviewer' });
 
-module.exports = { initDB, sequelize, User, Review };
+User.hasOne(ContactInfo, { foreignKey: 'userId' });
+ContactInfo.belongsTo(User, { targetKey: 'id', foreignKey: 'userId' });
+
+module.exports = { initDB, sequelize, User, Review, ContactInfo };
