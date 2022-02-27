@@ -17,12 +17,16 @@ router.get('/ticketmaster', catchAsync(async (req, res) => {
         .then(result => res.json(result));
 }));
 
+// upload.single() method is from multer to upload a single file to cloudinary. The name needs to match the name attribute on the form input.
+// If uploading multiple photos, use upload.array('insertNameOfFormInput')
 router.post('/imageupload', upload.single('profilePicture'), catchAsync(async (req, res) => {
-    let oldPicture = req.body.oldPicture;
+    // check if user's current profile picture already exists in cloudinary database. If yes, delete it.
+    let oldPicture = req.body.oldPicture
     if (oldPicture) {
         oldPicture = `${oldPicture.split('/')[7]}/${oldPicture.split('/')[8]}`;
         let oldPictureId = oldPicture.split('.')[0];
         cloudinary.uploader.destroy(oldPictureId, (err) => {if (err) next(err)});
+        // cloudinary.uploader.destroy is a cloudinary method to delete a photo from its database
     }
     const imgURL = req.file ? req.file.path : null;
     res.json(imgURL);

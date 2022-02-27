@@ -3,6 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 
 module.exports.getUserReviews = catchAsync(async (req, res) => {
     const userId = parseInt(req.params.id);
+    // findAndCountAll is a sequelize method to find all data rows and count how many there are
     const reviews = await Review.findAndCountAll({
         where: {
             receiverId: userId,

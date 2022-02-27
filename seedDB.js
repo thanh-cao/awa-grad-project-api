@@ -1,3 +1,4 @@
+// this file here is used to seed some data into our database
 const crypto = require('crypto');
 const { User, Review, ContactInfo } = require('./dbInit');
 
